@@ -1,0 +1,340 @@
+﻿<UserControl x:Class="FamilyManager.MainModule.SubExport.Views.ExportSetContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:local="clr-namespace:FamilyManager.MainModule.SubExport.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#11233B"/>
+
+
+        <Style x:Key="ButtonStyleForDataGridDelete" TargetType="{x:Type Button}">
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStyleForDataGrid" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFDFE0E2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FEC5A8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="Background" Value="#F6F7F8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FEC5A8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
+            <Border x:Name="border" CornerRadius="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ButtonTemplateForDataGrid" TargetType="{x:Type Button}">
+            <Border x:Name="border" CornerRadius="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}">
+            <StackPanel Orientation="Horizontal">
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                <Border Width="22" Height="22" Margin="5,0,0,0" BorderBrush="#FFABADB3" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                    <Border Margin="5">
+                        <Border.Background>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Path Name="path" Data="M 0 5 L 3 10 10 0" Stroke="White" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.Background>
+                    </Border>
+                </Border>
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="path" Property="Stroke" Value="black" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+                        
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="38"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="5,10,5,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button  Width="100"  Command="{Binding AddStorageFolderCommand}" Margin="0" Style="{StaticResource ButtonStyle}" Template="{StaticResource ButtonTemplate}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="/FamilyManager.MainModule.SubExport;component/Assets/Add.png" Margin="1"/>
+                        <TextBlock Text="添加" VerticalAlignment="Center" Margin="20,0,0,0"></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            
+            <TextBox Grid.Column="1" Margin="5,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Text="{Binding SrerchText,UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <VisualBrush x:Key="SearchTextBox" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                        <VisualBrush.Visual>
+                            <TextBlock FontStyle="Italic" FontSize="10"  Text="查找......"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </TextBox.Resources>
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource SearchTextBox}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource SearchTextBox}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+           
+        </Grid>
+
+        <DataGrid Grid.Row="1" Margin="5,2"
+                ItemsSource="{Binding StorageFolders}"               
+                HeadersVisibility="Column"
+                AutoGenerateColumns="False"
+                Background="#FFF"
+                BorderBrush="#FFABADB3"
+                CanUserAddRows="False"
+                GridLinesVisibility="None"
+                HorizontalScrollBarVisibility="Hidden"
+                VerticalScrollBarVisibility="Auto"                      
+                IsReadOnly="False"
+                
+                EnableRowVirtualization="True"
+                EnableColumnVirtualization="True"
+                VirtualizingStackPanel.VirtualizationMode="Standard"
+                VirtualizingStackPanel.IsVirtualizing="True">
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FEC5A8"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="IsSelected" Value="{Binding IsSelect}" />
+                    <Setter Property="Visibility" Value="{Binding IsVisibility}"/>
+                </Style>
+
+                <Style TargetType="DataGridCell">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FEC5A8"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.Header>
+                        <Button Content="—" Style="{StaticResource ButtonStyleForDataGridDelete}"  Command="{Binding DataContext.RemoveAllItemCommand,RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}">
+                            <Button.Background>
+                                <ImageBrush/>
+                            </Button.Background>
+                            <!--<Button.Content>
+                                <Image Source="/FamilyManager.MainModule.SubExport;component/Assets/Sub.png" />
+                            </Button.Content>-->
+                        </Button>
+
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="—" Style="{StaticResource ButtonStyleForDataGridDelete}"
+                                    Command="{Binding DataContext.RemoveCurItemCommand,RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" 
+                                    CommandParameter="{Binding}">
+                                <Button.Background>
+                                    <ImageBrush/>
+                                </Button.Background>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn x:Name="grid" Header="路径" IsReadOnly="True" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding ActualWidth, Source={x:Reference grid}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="25"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding FolderPath}" VerticalAlignment="Center"></TextBlock>
+                                <Button Grid.Column="1" Content="..." Margin="0,2,5,2" Style="{StaticResource ButtonStyleForDataGrid}" Template="{StaticResource ButtonTemplateForDataGrid}"
+                                        Command="{Binding DataContext.EditCurFolderPathCommand, RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}}" 
+                                        CommandParameter="{Binding}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="别名" Binding="{Binding FolderName}" IsReadOnly="False" Width="*" MaxWidth="300"/>
+            </DataGrid.Columns>
+
+
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,0,0,10">
+
+                <CheckBox IsChecked="{Binding IsCatalogAsFolder}" Template="{StaticResource StyleCheckBox}" Content="按类别分组导出：" VerticalContentAlignment="Center" Margin="0,3" HorizontalAlignment="Left">
+                    <CheckBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </CheckBox.Resources>
+                </CheckBox>
+
+                <CheckBox  IsChecked="{Binding IsSaveBackup}" Template="{StaticResource StyleCheckBox}" Content="保存备份文件：" VerticalContentAlignment="Center" Margin="50,3,0,3" HorizontalAlignment="Left">
+                    <CheckBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="3"/>
+                        </Style>
+                    </CheckBox.Resources>
+                </CheckBox>
+
+
+                <StackPanel Margin="50,3,0,3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSaveBackup}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Text="最大备份数：" VerticalAlignment="Center" Foreground="#11233B"></TextBlock>
+                    <TextBox Width="22" Height="22"  Margin="5,0,0,0" Text="{Binding MaxBackupCount,UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="3"/>
+                                <Setter Property="BorderBrush" Value="#FFABADB3"/>
+                            </Style>
+                        </TextBox.Resources>
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="Foreground" Value="Red"></Setter>
+                                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </StackPanel>
+                
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="保存并退出" Command="{Binding SaveAndCloseCommand}" IsEnabled="{Binding IsAllowSave}" 
+                    Template="{StaticResource ButtonTemplate}"
+                    Margin="0,2,0,10">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="BorderBrush" Value="#FFABADB3"/>
+                        <Setter Property="Background" Value="#F6F7F8"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FEC5A8"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsAllowSave}" Value="False">
+                                <Setter Property="Opacity" Value="0.3"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </Grid>
+
+
+
+    </Grid>
+
+
+</UserControl>
