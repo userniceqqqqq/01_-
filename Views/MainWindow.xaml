@@ -1,0 +1,114 @@
+﻿<Window x:Class="FamilyManager.MainModule.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FamilyManager.MainModule.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True" 
+        mc:Ignorable="d"
+        Title="族库管理" Icon="/FamilyManager.MainModule;component/Assets/族库管理_橙.png"  Height="550" Width="1000" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey }" Color="#11233B"/>
+
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--<TextBlock Grid.Column="1" Margin="-20,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" >欢迎使用族库管理系统V1.0</TextBlock>-->
+
+        <Border Grid.RowSpan="2" Background="#F6F7F8">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding LoadCommand}" CommandParameter="ImportContentView" Margin="0,0,0,25">
+                        <StackPanel Orientation="Vertical" >
+                            <Image Width="40" Margin="0,0,0,5">
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <!--Image.Source的数据触发器——要以下两点：-->
+                                        <!--1、设置 TargetType="{x:Type Image}"-->
+                                        <!--2、顶部的 Image 标记中删除 Source 属性，需将其放入Style中-->
+                                        <Setter Property="Source" Value="/FamilyManager.MainModule;component/Assets/导入族_灰.png" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsClickImport}" Value="True">
+                                                <Setter Property="Source" Value ="/FamilyManager.MainModule;component/Assets/导入族_橙.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="导入" Foreground="{Binding IsSelectedImportColor}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonStyle}"  Command="{Binding LoadCommand}"  CommandParameter="EditContentView" Margin="0,25">
+                        <StackPanel Orientation="Vertical" >
+                            <Image Width="40" Margin="0,0,0,5" >
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/FamilyManager.MainModule;component/Assets/编辑族_灰.png" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsClickEdit}" Value="True">
+                                                <Setter Property="Source" Value ="/FamilyManager.MainModule;component/Assets/编辑族_橙.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="编辑" Foreground="{Binding IsSelectedEditColor}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding LoadCommand}" CommandParameter="ExportContentView" Margin="0,25,0,0">
+                        <StackPanel Orientation="Vertical" >
+                            <Image Width="40"  Margin="0,0,0,5" >
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="/FamilyManager.MainModule;component/Assets/导出族_灰.png" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsClickExport}" Value="True">
+                                                <Setter Property="Source" Value ="/FamilyManager.MainModule;component/Assets/导出族_橙.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="导出" Foreground="{Binding IsSelectedExportColor}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
+        </Border>
+     
+
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="MainContent"></ContentControl>
+    </Grid>
+</Window>
